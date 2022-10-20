@@ -27,7 +27,7 @@ int main(int argc, char **argv, char **env) {
     top->en = 0;
 
     // run simulation for many clock cycles
-    for(i=0; i<1000; i++){
+    for(i=0; i<300; i++){
 
         // dump variables into VCD file and toggle clock
         for (clk=0; clk<2; clk++){
@@ -43,8 +43,8 @@ int main(int argc, char **argv, char **env) {
         vbdCycle(i+1);
         // end of VBuddy output section
 
-        top->rst = (i <2) | (i==15);
-        top->en = vbdFlag();
+        top->rst = (i <2) | (i==15); // initial reset and reset at 15
+        top->en = vbdFlag(); // only en on flag =1!
         if (Verilated::gotFinish()) exit(0);
     }
 

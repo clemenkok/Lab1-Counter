@@ -48,3 +48,32 @@ VBuddy.cpp presented several errors after trying to run. Despite successfully co
 # Starting the Count Properly
 
 We realised that the count would only increase if we make the flag positive and turn the wheel. This allows the enable signal to be registered and increased the count of the counter. 
+
+## Challenges
+
+```
+{
+top->rst = (i<2);
+top->en = (i<11) | (i>14);
+}
+```
+
+We adjust the clock cycles for which en is triggered to meet the criteria of not incrementing for 3 cycles at 0x9. Hence top->rst and top->en cycles have been adjusted as seen above. This gives us the GTKWave output as seen below.
+
+![Challenge1a GTKWave](images/1a_GTKWave.png)
+
+We also adjust `counter.sv` to make reset asynchronous.
+
+```
+{
+always_ff @ (posedge clk, posedge rst) // asynchronous reset
+if (rst) count <= {WIDTH{1'b0}}; 
+else     count <= count + {{WIDTH-1{1'b0}}, en};
+endmodule
+}
+```
+
+This causes the counter to not increase in the same clock cycle as the reset. Reset applies at the current rising edge of the clock. Comparatively for a synchoronous reset the reset only applies on the next rising edge of the clock.
+
+![Challenge1b GTKWave SYNC](images/SYNCRESET.png)
+![Challenge1b GTKWave ASYNC](images/ASYNCRESET.png)
