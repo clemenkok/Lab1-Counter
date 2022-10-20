@@ -49,6 +49,18 @@ VBuddy.cpp presented several errors after trying to run. Despite successfully co
 
 We realised that the count would only increase if we make the flag positive and turn the wheel. This allows the enable signal to be registered and increased the count of the counter. 
 
+# Missing Executable
+
+After running `vbdPlot` instead of `vbdHex` we note that there was an issue with the creation of the executable.
+
+![MissingExe](images/missingexe.png)
+
+# Correct Code?
+
+`counter.sv` does not seem to be the correct file that should be modified to serve the function of converting the current number to the stored parameter value.  
+
+![CorrectCode](images/correctcode.png)
+
 ## Challenges
 
 ```
@@ -73,7 +85,7 @@ endmodule
 }
 ```
 
-This causes the counter to not increase in the same clock cycle as the reset. Reset applies at the current rising edge of the clock. Comparatively for a synchoronous reset the reset only applies on the next rising edge of the clock.
+This causes the counter to not increase in the same clock cycle as the reset. Reset applies at the current rising edge of the clock. Comparatively for a synchoronous reset the reset only applies on the next rising edge of the clock.  
 
 ![Challenge1b GTKWave SYNC](images/SYNCRESET.png)
 ![Challenge1b GTKWave ASYNC](images/ASYNCRESET.png)
