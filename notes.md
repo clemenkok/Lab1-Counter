@@ -1,6 +1,4 @@
-#### EIE2 IAC Notes by Clemen Kok (ck21)
-
-### Task 1
+# EIE2 IAC Notes by Clemen Kok (ck21)
 
 ## Make a binary Counter
 
@@ -35,17 +33,17 @@ When rst is = 0, else flag triggered, this adds the current count to a concatnat
 
 ## Problems Encountered
 
-# System  
+### System  
 
 We faced several issues. I initially used Windows VSCode to clone the GitHub Folder but this created an issue where binaries were not loaded into Windows as the earlier Bash script to install was run in Ubuntu 22.04. Furthermore after entering WSL Ubuntu, it worked temporarily but Ubuntu does not allow access to COMS ports in Windows systems so Ubuntu 22.04 has to be used. Thus I copied over the files into Ubuntu 22.04 and thereafter it worked as I was able to access Vbuddy.  
 
 GTKWave had to be installed on Windows and .vcd files were loaded into Windows GTKWave instead of Ubuntu WSL.  
 
-# Halt  
+### Halt  
 
 VBuddy.cpp presented several errors after trying to run. Despite successfully connecting to the VBuddy board, we were unable to increase the counter count. The testbench in Task 1 showed that the module simulates correctly. However errors in VBuddy.cpp prevented us from seeing the simulation live. 
 
-# Starting the Count Properly
+### Starting the Count Properly
 
 We realised that the count would only increase if we make the flag positive and turn the wheel. This allows the enable signal to be registered and increased the count of the counter. 
 
