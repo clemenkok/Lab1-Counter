@@ -143,9 +143,9 @@ endmodule
 }
 ```
 
-the above code snippet allows us to (1) press the switch to arm and fire the flag, and (2) set the counter value to vbdValue(). this happens by having rst triggered upon the flag fire, which then passes the current vbdValue (which is saved in hardware as `value`) to the current count.
+the above code snippet allows us to (1) press the switch to arm and fire the flag, and (2) set the counter value to vbdValue(). this happens by having rst triggered upon the flag fire, which then passes the current vbdValue (which is saved in hardware as `value`) to the counter value.
 
-How it works 
+When the switch is pressed, rst becomes 1 (but only fires once due to `vbdSetMode()`) which passes value into the current count see `counter.sv`. 
 
 ```
 {
