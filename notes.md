@@ -59,6 +59,12 @@ After running `vbdPlot` instead of `vbdHex` we note that there was an issue with
 
 ![CorrectCode](images/correctcode.png)
 
+# Unused Values
+
+`top.sv` has input signals `v` and a parameter `DIGITS` which are unused. We are told to modify the testbench `top_tb.cpp` and not `top.sv` but we have to use the input signal and parameter if we want to compile. One way is that I thought of is to create another module or modify existing modules to utilise the 8-bit v input wire (preloaded via testbench) to give the BCD equivalent of this number.
+
+![UnusedValues](images/unused.png)
+
 ## Challenges
 
 ```
@@ -155,4 +161,8 @@ top->rst = (i<2) | (i==15);
 }
 ```
 
-This adjustment allows us to single-step the counter.
+This adjustment allows us to single-step the counter.  
+
+The BCD Algorithm is used to convert a binary number into a BCD. We do this by shifting left, checking for >=5 and adding 3 if so until all bits have been shifted left. 
+
+The file `top.sv` is not complete and requires adjustments.
