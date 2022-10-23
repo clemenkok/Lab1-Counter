@@ -1011,6 +1011,7 @@ void ack( ) {
   do {
       serial.readString(receivedString, finalChar, 80, 0);
     } while (receivedString[0]!='$');
+    usleep(10000);
 }
 
 void vbdClear() {
@@ -1091,6 +1092,8 @@ bool vbdFlag() {
   do {
     n = serial.readStringNoTimeOut(msg, finalChar, 10);
   } while (n<=0);
+    usleep(10000); // overhead
+
   return((msg[1]=='1'));
 }
 

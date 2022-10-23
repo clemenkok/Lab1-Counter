@@ -14,6 +14,7 @@ Vcounter::Vcounter(VerilatedContext* _vcontextp__, const char* _vcname__)
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
     , en{vlSymsp->TOP.en}
+    , value{vlSymsp->TOP.value}
     , count{vlSymsp->TOP.count}
     , rootp{&(vlSymsp->TOP)}
 {

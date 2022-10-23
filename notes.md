@@ -87,3 +87,72 @@ This causes the counter to not increase in the same clock cycle as the reset. Re
 
 ![Challenge1b GTKWave SYNC](images/SYNCRESET.png)
 ![Challenge1b GTKWave ASYNC](images/ASYNCRESET.png)
+
+```
+{
+//initialize simualation inputs
+    top->clk = 1;
+    top->rst = 1;
+    top->en = 0;
+    top-> value = 0;
+
+    //run simulation for many clock cycles
+    for (i=0; i<300;i++){
+
+        //dump variables into VCD file and toggle clock
+        for (clk=0;clk<2;clk++){
+            tfp->dump(2*i+clk);
+            top->clk = !top->clk;
+            top->eval ();
+        }
+
+        // ++++ send count value to Vbuddy (output count values to 7-seg display every cycle)
+        vbdHex(4,(int(top->count)>>12)&0xF);
+        vbdHex(3,(int(top->count)>>8)&0xF);
+        vbdHex(2,(int(top->count)>>4)&0xF);
+        vbdHex(1,int(top->count) &0xF);
+        vbdCycle(i+1);
+        // ----- end of Vbuddy output section
+
+        // change input stimuli
+        top->rst = vbdFlag();
+        top->value = vbdValue();
+        vbdSetMode(1); // one-shot behaviour, reflects input stimuli change. 
+}
+```
+
+```
+{
+module counter #(
+    parameter WIDTH = 8
+)(
+    // interface signals
+    input logic                    clk, //clock
+    input logic                    rst, //reset
+    input logic                    en,  //counter enable
+    input logic [WIDTH-1:0]        value,
+    output logic [WIDTH-1:0]       count //count output
+);
+
+always_ff @ (posedge clk)
+    if (rst) count <= value;
+    else     count <= count + {{WIDTH-1{1'b0}}, en};
+
+endmodule
+
+}
+```
+
+the above code snippet allows us to (1) press the switch to arm and fire the flag, and (2) set the counter value to vbdValue(). this happens by having rst triggered upon the flag fire, which then passes the current vbdValue (which is saved in hardware as `value`) to the current count.
+
+How it works 
+
+```
+{
+top->rst = (i<2) | (i==15);
+        top->en = vbdFlag();
+        vbdSetMode(1);
+}
+```
+
+This adjustment allows us to single-step the counter.

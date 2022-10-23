@@ -11,9 +11,9 @@ VL_INLINE_OPT void Vcounter___024root___sequent__TOP__0(Vcounter___024root* vlSe
     Vcounter__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcounter___024root___sequent__TOP__0\n"); );
     // Body
-    vlSelf->count = ((IData)(vlSelf->rst) ? 0U : (0xffU 
-                                                  & ((IData)(vlSelf->count) 
-                                                     + (IData)(vlSelf->en))));
+    vlSelf->count = (0xffU & ((IData)(vlSelf->rst) ? (IData)(vlSelf->value)
+                               : ((IData)(vlSelf->count) 
+                                  + (IData)(vlSelf->en))));
 }
 
 void Vcounter___024root___eval(Vcounter___024root* vlSelf) {
@@ -21,13 +21,11 @@ void Vcounter___024root___eval(Vcounter___024root* vlSelf) {
     Vcounter__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcounter___024root___eval\n"); );
     // Body
-    if ((((IData)(vlSelf->clk) & (~ (IData)(vlSelf->__Vclklast__TOP__clk))) 
-         | ((IData)(vlSelf->rst) & (~ (IData)(vlSelf->__Vclklast__TOP__rst))))) {
+    if (((IData)(vlSelf->clk) & (~ (IData)(vlSelf->__Vclklast__TOP__clk)))) {
         Vcounter___024root___sequent__TOP__0(vlSelf);
     }
     // Final
     vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
-    vlSelf->__Vclklast__TOP__rst = vlSelf->rst;
 }
 
 #ifdef VL_DEBUG
